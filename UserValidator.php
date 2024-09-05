@@ -10,7 +10,15 @@ class UserValidator
 
     public function validatePassword(string $password): bool
     {
-        $pattern = '/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/';
-        return preg_match($pattern, $password);
+        $lowercasePregMatch = preg_match('/[a-z]/', $password);
+        $uppercasePregMatch2 = preg_match('/[A-Z]/', $password);
+        $digitsPregMatch = preg_match('/[0-9]/', $password);
+        $specialCharsPregMatch = preg_match('/\W/', $password);
+
+        if (strlen($password) > 7 && $lowercasePregMatch && $digitsPregMatch && $specialCharsPregMatch && $uppercasePregMatch2) {
+            return true;
+        }
+
+        return false;
     }
 }
